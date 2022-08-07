@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import Header from './Header/Header';
+import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import WelcomePage from './WelcomePage/WelcomePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <WelcomePage/>
-  </React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode>
+      <Header/>
+      <WelcomePage/>
+    </React.StrictMode>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
