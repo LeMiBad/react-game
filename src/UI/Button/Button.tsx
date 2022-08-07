@@ -1,15 +1,15 @@
 import css from './Button.module.sass';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
 
 type StandardComponentProps = {
     className?: string
-    children: React.ReactNode
+    link?: string
+    children: React.ReactNode | React.ReactNode
 }
 
-const Button = ({className, children}: StandardComponentProps) => {
-    return (
-        <button className={cx(css.button, className)}>{children}</button>
-    )
+const Button: React.FC<StandardComponentProps> = ({className, link='/*', children}) => {
+    return <Link to={link}><button className={cx(css.button, className)}>{children}</button></Link>
 }
 
 export default Button;
