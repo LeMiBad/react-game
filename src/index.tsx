@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Header from './Header/Header';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './index.css';
-import WelcomePage from './WelcomePage/WelcomePage';
+import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
+import Header from './Header/Header';
+import WelcomePage from './WelcomePage/WelcomePage';
+import LevelPicker from './LevelPicker/LevelPicker';
 import Level from './Level/Level';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot( document.getElementById('root') as HTMLElement );
 
 root.render(
   <BrowserRouter>
@@ -18,6 +19,7 @@ root.render(
       <Routes>
         <Route path='/*' element={<WelcomePage/>}/>
         <Route path='/level' element={<Level/>}/>
+        <Route path='/levelpick' element={<LevelPicker/>}/>
       </Routes>
     </React.StrictMode>
   </BrowserRouter>

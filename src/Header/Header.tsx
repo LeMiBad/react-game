@@ -5,7 +5,7 @@ const Header = () => {
     return(
         <div className={css.headerWrapper}>
             <div className={css.headerContent}>
-                <Link to='/level'><div>Уровни</div></Link>
+                <Link to='/levelpick'><div>Уровни</div></Link>
                 <a target='blank' href='https://github.com/LeMiBad'><div>GitHub</div></a>
                 <Link to='*'><div className={css.main}>Главная</div></Link>
                 <a href='*'><div>Future</div></a>
