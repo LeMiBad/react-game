@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const badBlock = [undefined, 'water', 'produced', 'none'];
+
 const find: Function = (area: Array<Array<string>>) => {
     let y = 0,
         x = 0;
@@ -14,25 +16,36 @@ const find: Function = (area: Array<Array<string>>) => {
     return [y, x]
 }
 
-const badBlock = [undefined, 'water', 'produced', 'none'];
+const isLose = (gameArea: Array<Array<string>>) => {
+    const [y, x] = find(gameArea)
+    let arrayWays = [true, true, true, true];
+
+    (!badBlock.includes(gameArea[y-1][x]))? arrayWays[0] = true : arrayWays[0] = false;
+    (!badBlock.includes(gameArea[y][x+1]))? arrayWays[1] = true : arrayWays[1] = false;
+    (!badBlock.includes(gameArea[y+1][x]))? arrayWays[2] = true : arrayWays[2] = false;
+    (!badBlock.includes(gameArea[y][x-1]))? arrayWays[3] = true : arrayWays[3] = false;
+
+    if(arrayWays.includes(true)) return arrayWays.includes(true)  
+}
 
 const gameSlice = createSlice({
     name: 'game',
     initialState: {
         gameArea: [
             ['none', 'none', 'none', 'none', 'none', 'none', 'none'],
-            ['none', 'active', 'full', 'full', 'full', 'full', 'none'],
-            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
-            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
-            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
             ['none', 'full', 'full', 'full', 'full', 'full', 'none'],
+            ['none', 'full', 'water', 'full', 'water', 'full', 'none'],
+            ['none', 'full', 'water', 'full', 'water', 'full', 'none'],
+            ['none', 'full', 'water', 'full', 'water', 'full', 'none'],
+            ['none', 'full', 'active', 'full', 'full', 'full', 'none'],
             ['none', 'none', 'none', 'none', 'none', 'none', 'none'],
         ],
-        currentPos: [0, 0]
+        victoryState: 'in-game',
     },
     reducers: {
         moveUp (state) {
-            let [y, x] = find(state.gameArea)
+            const [y, x] = find(state.gameArea)
+            if(!isLose(state.gameArea)){console.log('Ты проиграл')}
             if(badBlock.includes(state.gameArea[y-1][x])){console.log('Туда нельзя проходить!')}
             else{
                 state.gameArea[y][x] = 'produced'
@@ -40,7 +53,8 @@ const gameSlice = createSlice({
             }
         },
         moveRight (state) {
-            let [y, x] = find(state.gameArea)
+            const [y, x] = find(state.gameArea)
+            if(!isLose(state.gameArea)){console.log('Ты проиграл')}
             if(badBlock.includes(state.gameArea[y][x+1])){console.log('Туда нельзя проходить!')}
             else{
                 state.gameArea[y][x] = 'produced'
@@ -48,21 +62,17 @@ const gameSlice = createSlice({
             }
         },
         moveDown (state) {
-            let [y, x] = find(state.gameArea)
+            const [y, x] = find(state.gameArea)
+            if(!isLose(state.gameArea)){console.log('Ты проиграл')}
             if(badBlock.includes(state.gameArea[y+1][x])){console.log('Туда нельзя проходить!')}
             else{
-                try{
                     state.gameArea[y][x] = 'produced'
                     state.gameArea[y+1][x] = 'active'
-                }catch(e){
-                    console.log(e)
-                    console.log(state.gameArea)
-                    console.log(state.gameArea[y+1][x])
-                }
             }
         },
         moveLeft (state) {
-            let [y, x] = find(state.gameArea)
+            const [y, x] = find(state.gameArea)
+            if(!isLose(state.gameArea)){console.log('Ты проиграл')}
             if(badBlock.includes(state.gameArea[y][x-1])){console.log('Туда нельзя проходить!')}
             else{
                 state.gameArea[y][x] = 'produced'
