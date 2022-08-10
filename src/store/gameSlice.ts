@@ -14,44 +14,60 @@ const find: Function = (area: Array<Array<string>>) => {
     return [y, x]
 }
 
+const badBlock = [undefined, 'water', 'produced', 'none'];
+
 const gameSlice = createSlice({
     name: 'game',
     initialState: {
         gameArea: [
-            ['active', 'full', 'full', 'full', 'full',],
-            ['full', 'full', 'full', 'full', 'full'],
-            ['full', 'full', 'full', 'full', 'full'],
-            ['full', 'full', 'full', 'full', 'full'],
-            ['full', 'full', 'full', 'full', 'full'],
+            ['none', 'none', 'none', 'none', 'none', 'none', 'none'],
+            ['none', 'active', 'full', 'full', 'full', 'full', 'none'],
+            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
+            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
+            ['none', 'full', 'full', 'water', 'full', 'full', 'none'],
+            ['none', 'full', 'full', 'full', 'full', 'full', 'none'],
+            ['none', 'none', 'none', 'none', 'none', 'none', 'none'],
         ],
         currentPos: [0, 0]
     },
     reducers: {
         moveUp (state) {
-            console.log('рендер')
             let [y, x] = find(state.gameArea)
-            state.gameArea[y][x] = 'produced'
-            state.gameArea[y-1][x] = 'active'
+            if(badBlock.includes(state.gameArea[y-1][x])){console.log('Туда нельзя проходить!')}
+            else{
+                state.gameArea[y][x] = 'produced'
+                state.gameArea[y-1][x] = 'active'
+            }
         },
         moveRight (state) {
-            console.log('рендер')
             let [y, x] = find(state.gameArea)
-            let newarr = state.gameArea
-            console.log(newarr)
-            state.gameArea[y][x] = 'produced'
-            state.gameArea[y][x+1] = 'active'
+            if(badBlock.includes(state.gameArea[y][x+1])){console.log('Туда нельзя проходить!')}
+            else{
+                state.gameArea[y][x] = 'produced'
+                state.gameArea[y][x+1] = 'active'
+            }
         },
         moveDown (state) {
-            console.log('рендер')
             let [y, x] = find(state.gameArea)
-            state.gameArea[y][x] = 'produced'
-            state.gameArea[y+1][x] = 'active'
+            if(badBlock.includes(state.gameArea[y+1][x])){console.log('Туда нельзя проходить!')}
+            else{
+                try{
+                    state.gameArea[y][x] = 'produced'
+                    state.gameArea[y+1][x] = 'active'
+                }catch(e){
+                    console.log(e)
+                    console.log(state.gameArea)
+                    console.log(state.gameArea[y+1][x])
+                }
+            }
         },
         moveLeft (state) {
-            console.log('рендер')
             let [y, x] = find(state.gameArea)
-            state.gameArea[y][x] = 'produced'
-            state.gameArea[y][x-1] = 'active'
+            if(badBlock.includes(state.gameArea[y][x-1])){console.log('Туда нельзя проходить!')}
+            else{
+                state.gameArea[y][x] = 'produced'
+                state.gameArea[y][x-1] = 'active'
+            }
         }
     }
 })
