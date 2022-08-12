@@ -55,6 +55,15 @@ const gameSlice = createSlice({
         setLevel (state, gameArea) {
             state.gameArea = gameArea.payload
         },
+        inGame: (state) => {
+            state.victoryState = 'in-game'
+        },
+        looseEnd (state) {
+            state.victoryState = 'loose'
+        },
+        winEnd (state) {
+            state.victoryState = 'win'
+        },
         moveUp (state) {
             const [y, x] = find(state.gameArea)
             if(badBlock.includes(state.gameArea[y-1][x])){console.log('Туда нельзя проходить!')}
@@ -62,8 +71,8 @@ const gameSlice = createSlice({
                 state.gameArea[y][x] = 'produced'
                 state.gameArea[y-1][x] = 'active'
             }
-            if(isLose(state.gameArea) === 'win') {console.log('Ты победил')}
-            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл')}
+            if(isLose(state.gameArea) === 'win') {console.log('Ты победил'); gameSlice.caseReducers.winEnd(state)}
+            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл'); gameSlice.caseReducers.looseEnd(state)}
 
         },
         moveRight (state) {
@@ -73,8 +82,8 @@ const gameSlice = createSlice({
                 state.gameArea[y][x] = 'produced'
                 state.gameArea[y][x+1] = 'active'
             }
-            if(isLose(state.gameArea) === 'win') {console.log('Ты победил')}
-            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл')}
+            if(isLose(state.gameArea) === 'win') {console.log('Ты победил'); gameSlice.caseReducers.winEnd(state)}
+            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл'); gameSlice.caseReducers.looseEnd(state)}
         },
         moveDown (state) {
             const [y, x] = find(state.gameArea)
@@ -83,8 +92,8 @@ const gameSlice = createSlice({
                     state.gameArea[y][x] = 'produced'
                     state.gameArea[y+1][x] = 'active'
             }
-            if(isLose(state.gameArea) === 'win') {console.log('Ты победил')}
-            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл')}
+            if(isLose(state.gameArea) === 'win') {console.log('Ты победил'); gameSlice.caseReducers.winEnd(state)}
+            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл'); gameSlice.caseReducers.looseEnd(state)}
         },
         moveLeft (state) {
             const [y, x] = find(state.gameArea)
@@ -93,12 +102,12 @@ const gameSlice = createSlice({
                 state.gameArea[y][x] = 'produced'
                 state.gameArea[y][x-1] = 'active'
             }
-            if(isLose(state.gameArea) === 'win') {console.log('Ты победил')}
-            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл')}
+            if(isLose(state.gameArea) === 'win') {console.log('Ты победил'); gameSlice.caseReducers.winEnd(state)}
+            if(isLose(state.gameArea) === 'loose') {console.log('Ты проиграл'); gameSlice.caseReducers.looseEnd(state)}
         }
     }
 })
 
-export const { setLevel, moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions;
+export const {  inGame, setLevel, moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions;
 
 export default gameSlice.reducer;

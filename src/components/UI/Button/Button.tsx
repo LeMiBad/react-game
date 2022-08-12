@@ -1,6 +1,8 @@
 import css from './Button.module.sass';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { inGame } from '../../../store/gameSlice';
 
 type StandardComponentProps = {
     className?: string
@@ -9,7 +11,9 @@ type StandardComponentProps = {
 }
 
 const Button: React.FC<StandardComponentProps> = ({className, link='/*', children}) => {
-    return <Link to={link}><button className={cx(css.button, className)}>{children}</button></Link>
+    const dispatch = useDispatch()
+
+    return <Link to={link}><button onClick={() => {dispatch(inGame())}} className={cx(css.button, className)}>{children}</button></Link>
 }
 
 export default Button;

@@ -3,10 +3,11 @@ import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { moveUp, moveRight, moveDown, moveLeft } from '../../store/gameSlice';
 import React from 'react';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 const Level = (gameRule?: {}) => {
 
-    const gameArea: any = useSelector(state => state)
+    const state: any = useSelector(state => state)
     const dispatch = useDispatch();
 
     const Cell = (type: any, key: number) => {
@@ -41,10 +42,23 @@ const Level = (gameRule?: {}) => {
         if(leftLayout.includes(e.key)) { try{leftRef.current.click()}catch(e){} }
     })
 
+    const endGame = (gameResult: string) => {
+        const goodTextArray = ['Великолепно!', 'Потрясающе!', 'Невероятно!']
+        const badTextArray = ['Печально(', 'Больше старайся', 'Всё поулчится!']
+        const randomGoodTextArray = goodTextArray[Math.floor(Math.random() * goodTextArray.length)];
+        const randomBadTextArray = badTextArray[Math.floor(Math.random() * badTextArray.length)];
+        if(gameResult === 'win') return <ModalWindow buttonLink={'/levelpick'} buttonColor={'green'} mainText={randomGoodTextArray} secondText={'Нажимай, что-бы перейти на новый уровень!!!'} buttonText={'Next!'}/>
+        if(gameResult === 'loose') return <ModalWindow buttonLink={'/levelpick'} buttonColor={'red'} mainText={randomBadTextArray} secondText={'Я уверен, у тебя всё получится!!!'} buttonText={'Again!'}/>
+        return 
+    }
+    console.log(state.game.victoryState)
+
+
     return (
         <div className={css.playgroundWrapper}>
+            {endGame(state.game.victoryState)}
             <div className={css.playgroundContentWrapper}>
-                {gameArea.game.gameArea.map((item: Array<string>, index: number) => <div key={index} className={css.cellWrapper}>{item.map((item: string, index: number) => Cell(item, index))}</div>)}
+                {state.game.gameArea.map((item: Array<string>, index: number) => <div key={index} className={css.cellWrapper}>{item.map((item: string, index: number) => Cell(item, index))}</div>)}
                 <button ref={upRef} onClick={() => {dispatch(moveUp())}}>right</button>
                 <button ref={rightRef} onClick={() => {dispatch(moveRight())}}>right</button>
                 <button ref={downRef} onClick={() => {dispatch(moveDown())}}>right</button>
