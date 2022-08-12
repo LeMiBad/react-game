@@ -5,12 +5,12 @@ import { moveUp, moveRight, moveDown, moveLeft } from '../../store/gameSlice';
 import React from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
 
-const Level = (gameRule?: {}) => {
+const Level = () => {
 
     const state: any = useSelector(state => state)
     const dispatch = useDispatch();
 
-    const Cell = (type: any, key: number) => {
+    const Cell = (type: string, key: number) => {
         if(type === 'none') return 
         if(type === 'empty') type = cx(css.cell, css.empty)
         if(type === 'active') type = cx(css.cell, css.active)
@@ -18,7 +18,7 @@ const Level = (gameRule?: {}) => {
         if(type === 'water') type = cx(css.cell, css.water)
         if(type === 'full') type = css.cell
 
-        return <div key={key} style={{width: `50px`, height: `50px`}} className={type}></div>
+        return <div key={key} style={{width: `60px`, height: `60px`}} className={type}></div>
     }
 
     const upLayout = ['w', 'W', 'ц', 'Ц', 'ArrowUp'],
@@ -48,10 +48,9 @@ const Level = (gameRule?: {}) => {
         const randomGoodTextArray = goodTextArray[Math.floor(Math.random() * goodTextArray.length)];
         const randomBadTextArray = badTextArray[Math.floor(Math.random() * badTextArray.length)];
         if(gameResult === 'win') return <ModalWindow buttonLink={'/levelpick'} buttonColor={'green'} mainText={randomGoodTextArray} secondText={'Нажимай, что-бы перейти на новый уровень!!!'} buttonText={'Next!'}/>
-        if(gameResult === 'loose') return <ModalWindow buttonLink={'/levelpick'} buttonColor={'red'} mainText={randomBadTextArray} secondText={'Я уверен, у тебя всё получится!!!'} buttonText={'Again!'}/>
+        if(gameResult === 'loose') return <ModalWindow buttonLink={'/level'} buttonColor={'red'} mainText={randomBadTextArray} secondText={'Я уверен, у тебя всё получится!!!'} buttonText={'Again!'}/>
         return 
     }
-    console.log(state.game.victoryState)
 
 
     return (

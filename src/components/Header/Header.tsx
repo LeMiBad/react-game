@@ -7,7 +7,7 @@ const Header = () => {
             <div className={css.headerContent}>
                 <Link to='/levelpick'><div>Уровни</div></Link>
                 <a target='blank' href='https://github.com/LeMiBad'><div>GitHub</div></a>
-                <Link to='*'><div className={css.main}>Главная</div></Link>
+                <Link to='/welcomepage'><div className={css.main}>Главная</div></Link>
                 <a href='*'><div>Future</div></a>
                 <a href='*'><div>Future</div></a>
             </div>

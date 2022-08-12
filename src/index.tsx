@@ -11,6 +11,7 @@ import Header from './components/Header/Header';
 import WelcomePage from './components/WelcomePage/WelcomePage';
 import LevelPicker from './components/LevelPicker/LevelPicker';
 import Level from './components/Level/Level';
+import SoonPage from './components/SoonPage/SoonPage';
 
 const root = ReactDOM.createRoot( document.getElementById('root') as HTMLElement );
 
@@ -20,9 +21,10 @@ root.render(
       <Provider store={store}>
         <Header/>
         <Routes>
-          <Route path='/*' element={<WelcomePage/>}/>
+          <Route path='/welcomepage' element={<WelcomePage/>}/>
           <Route path='/level' element={<Level/>}/>
           <Route path='/levelpick' element={<LevelPicker/>}/>
+          <Route path='/*' element={<SoonPage/>}/>
         </Routes>
       </Provider>
     </React.StrictMode>
