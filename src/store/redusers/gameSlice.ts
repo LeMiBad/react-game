@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { gameState } from './../../types/IGame';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const badBlock = [undefined, 'water', 'produced', 'none'];
 
@@ -40,48 +42,55 @@ const isLose = (gameArea: Array<Array<string>>) => {
     if(arrayCounter === 4) return 'loose' 
 }
 
+
+const initialState: gameState = {
+    victoryState: 'in-game',
+    currentGameArea: [['arr']],
+    gameArea: [['none', 'none', 'none'],['none', 'active', 'none'],['none',  'none',  'none'],],
+    possiblePickData: [],
+    lvlPickData: [
+        [
+            'active',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted'
+        ],
+        [
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+        ],
+        [
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+            'uncompleted',
+        ]
+    ]
+}
+
+
+export const getLevel = createAsyncThunk(
+    'game/getLevel',
+    async (levelId: string) => {
+        const responce = await axios.get(`http://localhost:3100/levels/${levelId}`)
+        return responce.data
+    }
+)
+
 const gameSlice = createSlice({
     name: 'game',
-    initialState: {
-        victoryState: 'in-game',
-        currentGameArea: [],
-        gameArea: [['none', 'none', 'none'],['none', 'active', 'none'],['none',  'none',  'none'],],
-        possiblePickData: [],
-        lvlPickData: [
-            [
-                'active',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted'
-            ],
-            [
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-            ],
-            [
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-                'uncompleted',
-            ]
-        ]
-
-    },
+    initialState,
     reducers: {
         setPossiblePickData (state, possiblePickData) {
             state.possiblePickData = possiblePickData.payload
-        },
-        setLevel (state, gameArea) {
-            state.gameArea = gameArea.payload
-            state.currentGameArea = gameArea.payload
         },
         inGame: (state) => {
             if(state.victoryState === 'loose'){
@@ -90,7 +99,6 @@ const gameSlice = createSlice({
             state.victoryState = 'in-game'
         },
         looseEnd (state) {
-            console.log(state)
             state.victoryState = 'loose'
         },
         winEnd (state) {
@@ -138,9 +146,18 @@ const gameSlice = createSlice({
             if(isLose(state.gameArea) === 'win') gameSlice.caseReducers.winEnd(state)
             if(isLose(state.gameArea) === 'loose') gameSlice.caseReducers.looseEnd(state)
         }
-    }
+    },
+    extraReducers(builder) {
+        builder.addCase(getLevel.pending, (state, action) => {
+            // console.log(state, action)
+        })
+        builder.addCase(getLevel.fulfilled, (state, action) => {
+            state.gameArea = action.payload.levelInfo
+            state.currentGameArea = action.payload.levelInfo
+        })
+    },
 })
 
-export const { setPossiblePickData,  inGame, setLevel, moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions;
+export const { setPossiblePickData,  inGame, moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions;
 
 export default gameSlice.reducer;

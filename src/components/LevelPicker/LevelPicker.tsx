@@ -2,20 +2,19 @@ import css from './LevelPicker.module.sass';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLevel, setPossiblePickData } from '../../store/gameSlice';
-import axios from 'axios';
+import { getLevel, setPossiblePickData } from '../../store/redusers/gameSlice';
 
 const LevelPicker = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const state: any = useSelector(state => state);
 
-    const fetchLevel = async (e: any,) => {
-        const responce = await axios.get(`http://localhost:3100/levels/${e.target.innerText}`)
-        await dispatch(setLevel(responce.data.levelInfo))
+    const fetchLevel = async (e: React.SyntheticEvent<HTMLDivElement>) => {
+        const element = e.target as HTMLInputElement
+        dispatch(getLevel(element.innerText))
     }
 
     const returnLevelPicker = (levelStatus: any, index: number) => {
-        if(levelStatus === 'uncompleted') return <Link onClick={() => {dispatch(setPossiblePickData(getPossiblePickData()))}} key={index} to={'/levelpick'}><div onClick={fetchLevel} className={cx(css.lvl, css.uncompleted)}><div className={css.lvlItem}>{index+1}</div></div></Link>
+        if(levelStatus === 'uncompleted') return <Link to={'*'} style={{pointerEvents: 'none'}} key={index}><div onClick={fetchLevel} className={cx(css.lvl, css.uncompleted)}><div className={css.lvlItem}>{index+1}</div></div></Link>
         if(levelStatus === 'completed') return <Link onClick={() => {dispatch(setPossiblePickData(getPossiblePickData()))}} key={index} to={'/level'}><div onClick={fetchLevel} className={css.lvl}><div className={css.lvlItem}>{index+1}</div></div></Link>
         if(levelStatus === 'active') return <Link onClick={() => {dispatch(setPossiblePickData(getPossiblePickData()))}} key={index} to={'/level'}><div onClick={fetchLevel} className={css.lvl}><div className={css.lvlItem}>{index+1}</div></div></Link>
     } 
@@ -31,7 +30,7 @@ const LevelPicker = () => {
         oldarr[activeIndex+1] = 'active'
         
         for(let i = 0; i <= oldarr.length; i += 6){
-            newArr.push(oldarr.slice(0+i, 6+i))
+            newArr.push(oldarr.slice(i, 6+i))
         }
         newArr.splice(newArr.indexOf([]), 1)
         return newArr

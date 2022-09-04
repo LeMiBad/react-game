@@ -2,7 +2,7 @@ import css from './Button.module.sass';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { inGame } from '../../../store/gameSlice';
+import { inGame } from '../../../store/redusers/gameSlice';
 
 type StandardButtonProps = {
     className?: string

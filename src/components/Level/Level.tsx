@@ -1,7 +1,7 @@
 import css from './Level.module.sass'
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { moveUp, moveRight, moveDown, moveLeft } from '../../store/gameSlice';
+import { moveUp, moveRight, moveDown, moveLeft } from '../../store/redusers/gameSlice';
 import React from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
 
