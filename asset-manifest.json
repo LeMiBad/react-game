@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/lemibad.github.io/static/css/main.9c8ca17e.css",
-    "main.js": "/lemibad.github.io/static/js/main.15d0e9f3.js",
-    "index.html": "/lemibad.github.io/index.html",
-    "main.9c8ca17e.css.map": "/lemibad.github.io/static/css/main.9c8ca17e.css.map",
-    "main.15d0e9f3.js.map": "/lemibad.github.io/static/js/main.15d0e9f3.js.map"
+    "main.css": "/react-game/static/css/main.9c8ca17e.css",
+    "main.js": "/react-game/static/js/main.15d0e9f3.js",
+    "index.html": "/react-game/index.html",
+    "main.9c8ca17e.css.map": "/react-game/static/css/main.9c8ca17e.css.map",
+    "main.15d0e9f3.js.map": "/react-game/static/js/main.15d0e9f3.js.map"
   },
   "entrypoints": [
     "static/css/main.9c8ca17e.css",
