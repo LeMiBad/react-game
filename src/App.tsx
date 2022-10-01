@@ -19,7 +19,7 @@ const App = () => {
             transform: 'translate3d(0%,0,0)'
         },
         leave: {
-            opacity: 0,
+            display: 'none',
             transform: 'translate3d(-100%,0,0)'
         },
     })
@@ -33,6 +33,7 @@ const App = () => {
             <animated.div style={props}>
                 <Routes location={item}>
                     <Route path='/' element={<WelcomePage />} />
+                    <Route path='/react-game' element={<WelcomePage />} />
                     <Route path='/level' element={<Level />} />
                     <Route path='/levelpick' element={<LevelPicker />} />
                     <Route path='/control' element={<SoonPage mainText="Управление" secondText="Управление производится клавишами w a s d или стрелочками"/>} />
