@@ -80,7 +80,7 @@ const initialState: gameState = {
 export const getLevel = createAsyncThunk(
     'game/getLevel',
     async (levelId: string) => {
-        const responce = await axios.get(`http://localhost:3100/levels/${levelId}`)
+        const responce = await axios.get(`https://game-for-react-game.vercel.app/levels/${levelId}`)
         return responce.data
     }
 )
