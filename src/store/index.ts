@@ -1,8 +1,18 @@
-import gameReducer  from './redusers/gameSlice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import gameReducer from './redusers/gameSlice';
 
-export default configureStore({
-    reducer: {
-        game: gameReducer
-    }
+
+const rootReducer = combineReducers({
+    gameReducer
 })
+
+
+export const setupStore = () => {
+    return configureStore({
+        reducer: rootReducer
+    })
+}
+
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

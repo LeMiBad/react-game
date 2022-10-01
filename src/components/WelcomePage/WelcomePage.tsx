@@ -1,4 +1,4 @@
-import ModalWindow from '../ModalWindow/ModalWindow';
+import ModalWindow from '../UI/ModalWindow/ModalWindow';
 import css from './WelcomePage.module.sass'
 
 const WelcomePage = () => {

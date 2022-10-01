@@ -5,11 +5,11 @@ const Header = () => {
     return(
         <div className={css.headerWrapper}>
             <div className={css.headerContent}>
-                <Link to='/levelpick'><div>Уровни</div></Link>
-                <a target='blank' href='https://github.com/LeMiBad'><div>GitHub</div></a>
-                <Link to='/'><div className={css.main}>Главная</div></Link>
-                <a href='*'><div>Future</div></a>
-                <a href='*'><div>Future</div></a>
+                <Link to='/levelpick'>Уровни</Link>
+                <a target='blank' href='https://github.com/LeMiBad'>GitHub</a>
+                <Link to='/' className={css.main}>Главная</Link>
+                <Link to='*'>Генератор уровней</Link>
+                <Link to='/control'>Управление</Link>
             </div>
         </div>
     )

@@ -1,26 +1,26 @@
 import css from './LevelPicker.module.sass';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { getLevel, setPossiblePickData } from '../../store/redusers/gameSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import {gameSlice, getLevel} from '../../store/redusers/gameSlice';
 
 const LevelPicker = () => {
-    const dispatch = useDispatch<any>();
-    const state: any = useSelector(state => state);
+    const dispatch = useAppDispatch()
+    const {lvlPickData} = useAppSelector(state => state.gameReducer)
+    const {setPossiblePickData} = gameSlice.actions
 
-    const fetchLevel = async (e: React.SyntheticEvent<HTMLDivElement>) => {
-        const element = e.target as HTMLInputElement
-        dispatch(getLevel(element.innerText))
+    const fetchLevel = async (lvlId: string) => {
+        dispatch(getLevel(lvlId))
     }
 
     const returnLevelPicker = (levelStatus: any, index: number) => {
-        if(levelStatus === 'uncompleted') return <Link to={'*'} style={{pointerEvents: 'none'}} key={index}><div onClick={fetchLevel} className={cx(css.lvl, css.uncompleted)}><div className={css.lvlItem}>{index+1}</div></div></Link>
-        if(levelStatus === 'completed') return <Link onClick={() => {dispatch(setPossiblePickData(getPossiblePickData()))}} key={index} to={'/level'}><div onClick={fetchLevel} className={css.lvl}><div className={css.lvlItem}>{index+1}</div></div></Link>
-        if(levelStatus === 'active') return <Link onClick={() => {dispatch(setPossiblePickData(getPossiblePickData()))}} key={index} to={'/level'}><div onClick={fetchLevel} className={css.lvl}><div className={css.lvlItem}>{index+1}</div></div></Link>
+        if(levelStatus === 'uncompleted') return <Link className={cx(css.lvl, css.uncompleted)} to={'*'} style={{pointerEvents: 'none'}} key={index}>{index+1}</Link>
+        if(levelStatus === 'completed') return <Link className={css.lvl} onClick={() => {dispatch(setPossiblePickData(getPossiblePickData())); fetchLevel(String(index+1))}} key={index} to={'/level'}>{index+1}</Link>
+        if(levelStatus === 'active') return <Link className={css.lvl} onClick={() => {dispatch(setPossiblePickData(getPossiblePickData())); fetchLevel(String(index+1))}} key={index} to={'/level'}>{index+1}</Link>
     } 
 
     const getPossiblePickData = () => {
-        let oldarr = state.game.lvlPickData.flat(1)
+        let oldarr = lvlPickData.flat(1)
         let newArr = []
         let activeIndex = 0;
         oldarr.forEach((item: string, index: number) => {
@@ -29,9 +29,7 @@ const LevelPicker = () => {
         oldarr[activeIndex] = 'completed'
         oldarr[activeIndex+1] = 'active'
         
-        for(let i = 0; i <= oldarr.length; i += 6){
-            newArr.push(oldarr.slice(i, 6+i))
-        }
+        for(let i = 0; i <= oldarr.length; i += 6) newArr.push(oldarr.slice(i, 6+i))
         newArr.splice(newArr.indexOf([]), 1)
         return newArr
     }
@@ -40,7 +38,7 @@ const LevelPicker = () => {
     return (
         <div className={css.levelPickerWrapper}>
             <div className={css.levelPickerContentWrapper}>
-                {state.game.lvlPickData.map((item: any, index: number) => <div key={index} className={css.levelWrapper}>{item.map((level: any, ind: number) => returnLevelPicker(level, (index)*6+ind))}</div>)}
+                {lvlPickData.map((item: any, index: number) => <div key={index} className={css.levelWrapper}>{item.map((level: string, ind: number) => returnLevelPicker(level, (index)*6+ind))}</div>)}
             </div>
         </div>
     )

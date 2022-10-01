@@ -5,27 +5,19 @@ import axios from "axios";
 const badBlock = [undefined, 'water', 'produced', 'none'];
 
 const find: Function = (area: Array<Array<string>>) => {
-    let y = 0,
-        x = 0;
-    area.forEach((item: Array<string>, index: number) => {
-        item.forEach((i, ind) => {
-            if(i === 'active'){
-                x = ind
-                y = index
-            }
-        })
-    })
-    return [y, x]
+    for(let i = 0; i < area.length; i++) {
+        for(let j = 0; j < area[i].length; j++) {
+            if(area[i][j] === 'active') return [i, j]   
+        }
+    }
 }
 
 const isLose = (gameArea: Array<Array<string>>) => {
-    let isWin: boolean = true
+    let isWin = true
 
-    gameArea.forEach((item: Array<string>) => {
+    gameArea.forEach((item) => {
         item.forEach((i) => {
-            if(i === 'full'){
-                isWin = false;
-            }
+            if(i === 'full') isWin = false
         })
     })
     if(isWin) return 'win'
@@ -34,10 +26,10 @@ const isLose = (gameArea: Array<Array<string>>) => {
     const [y, x] = find(gameArea)
     let arrayCounter = 0;
 
-    (!badBlock.includes(gameArea[y-1][x]))? arrayCounter = arrayCounter - 1 : arrayCounter = arrayCounter + 1;
-    (!badBlock.includes(gameArea[y][x+1]))? arrayCounter = arrayCounter - 1 : arrayCounter = arrayCounter + 1;
-    (!badBlock.includes(gameArea[y+1][x]))? arrayCounter = arrayCounter - 1 : arrayCounter = arrayCounter + 1;
-    (!badBlock.includes(gameArea[y][x-1]))? arrayCounter = arrayCounter - 1 : arrayCounter = arrayCounter + 1;
+    (!badBlock.includes(gameArea[y-1][x]))? arrayCounter -= 1 : arrayCounter += 1;
+    (!badBlock.includes(gameArea[y][x+1]))? arrayCounter -= 1 : arrayCounter += 1;
+    (!badBlock.includes(gameArea[y+1][x]))? arrayCounter -= 1 : arrayCounter += 1;
+    (!badBlock.includes(gameArea[y][x-1]))? arrayCounter -= 1 : arrayCounter += 1;
 
     if(arrayCounter === 4) return 'loose' 
 }
@@ -85,7 +77,7 @@ export const getLevel = createAsyncThunk(
     }
 )
 
-const gameSlice = createSlice({
+export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
@@ -148,16 +140,11 @@ const gameSlice = createSlice({
         }
     },
     extraReducers(builder) {
-        builder.addCase(getLevel.pending, (state, action) => {
-            // console.log(state, action)
-        })
         builder.addCase(getLevel.fulfilled, (state, action) => {
             state.gameArea = action.payload.levelInfo
             state.currentGameArea = action.payload.levelInfo
         })
     },
 })
-
-export const { setPossiblePickData,  inGame, moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions;
 
 export default gameSlice.reducer;

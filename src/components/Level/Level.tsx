@@ -1,14 +1,16 @@
 import css from './Level.module.sass'
 import cx from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { moveUp, moveRight, moveDown, moveLeft } from '../../store/redusers/gameSlice';
-import React from 'react';
-import ModalWindow from '../ModalWindow/ModalWindow';
+import {gameSlice} from '../../store/redusers/gameSlice';
+import { useEffect, createRef } from 'react';
+import ModalWindow from '../UI/ModalWindow/ModalWindow';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Navigate } from 'react-router-dom';
 
 const Level = () => {
 
-    const state: any = useSelector(state => state)
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch()
+    const {gameArea, victoryState} = useAppSelector(state => state.gameReducer)
+    const {moveUp, moveRight, moveDown, moveLeft} = gameSlice.actions
 
     const Cell = (type: string, key: number) => {
         if(type === 'none') return 
@@ -27,19 +29,21 @@ const Level = () => {
         leftLayout = ['a', 'A', 'ф', 'Ф', 'ArrowLeft'];
 
     
-    const upRef: any = React.createRef(),
-        rightRef: any = React.createRef(),
-        downRef: any = React.createRef(),
-        leftRef: any = React.createRef();  
+    const upRef: any = createRef(),
+        rightRef: any = createRef(),
+        downRef: any = createRef(),
+        leftRef: any = createRef();  
 
-    window.addEventListener('keydown', (e) => {
-        if(upLayout.includes(e.key)) { try{upRef.current.click()}catch(e){} }
-
-        if(rightLayout.includes(e.key)) { try{rightRef.current.click()}catch(e){} }
-
-        if(downLayout.includes(e.key)) { try{downRef.current.click()}catch(e){} }
-
-        if(leftLayout.includes(e.key)) { try{leftRef.current.click()}catch(e){} }
+    useEffect(() => {
+        window.addEventListener('keydown', (e) => {
+            if(upLayout.includes(e.key)) try{upRef.current.click()}catch(e){}
+    
+            if(rightLayout.includes(e.key)) try{rightRef.current.click()}catch(e){}
+    
+            if(downLayout.includes(e.key)) try{downRef.current.click()}catch(e){}
+    
+            if(leftLayout.includes(e.key)) try{leftRef.current.click()}catch(e){}
+        })
     })
 
     const endGame = (gameResult: string) => {
@@ -52,12 +56,15 @@ const Level = () => {
         return 
     }
 
+    if(gameArea === undefined) return (
+        <Navigate to={'/levelpick'}></Navigate>
+    )
 
     return (
         <div className={css.playgroundWrapper}>
-            {endGame(state.game.victoryState)}
+            {endGame(victoryState)}
             <div className={css.playgroundContentWrapper}>
-                {state.game.gameArea.map((item: Array<string>, index: number) => <div key={index} className={css.cellWrapper}>{item.map((item: string, index: number) => Cell(item, index))}</div>)}
+                {gameArea.map((item: Array<string>, index: number) => <div key={index} className={css.cellWrapper}>{item.map((item: string, index: number) => Cell(item, index))}</div>)}
                 <button ref={upRef} onClick={() => {dispatch(moveUp())}}>right</button>
                 <button ref={rightRef} onClick={() => {dispatch(moveRight())}}>right</button>
                 <button ref={downRef} onClick={() => {dispatch(moveDown())}}>right</button>

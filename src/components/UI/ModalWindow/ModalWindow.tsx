@@ -1,4 +1,4 @@
-import Button from '../UI/Button/Button';
+import Button from '../Button/Button';
 import css from './ModalWindow.module.sass'
 
 type ModalWindowComponentProps = {
@@ -10,7 +10,6 @@ type ModalWindowComponentProps = {
 }
 
 const ModalWindow: React.FC<ModalWindowComponentProps> = ({buttonColor, buttonText, mainText, secondText, buttonLink}) => {
-
     const buttonStylePicker = (color: string) => {
         if(color === 'green') return css.green
         if(color === 'red') return css.red
