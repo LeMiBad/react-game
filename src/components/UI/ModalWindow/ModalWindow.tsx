@@ -10,9 +10,8 @@ type ModalWindowComponentProps = {
 }
 
 const ModalWindow: React.FC<ModalWindowComponentProps> = ({buttonColor, buttonText, mainText, secondText, buttonLink}) => {
-    const buttonStylePicker = (color: string) => {
-        if(color === 'green') return css.green
-        if(color === 'red') return css.red
+    const getButtonColor = (color: string) => {
+        return (color === 'green')? css.green : css.red 
     }
 
     return (
@@ -22,7 +21,7 @@ const ModalWindow: React.FC<ModalWindowComponentProps> = ({buttonColor, buttonTe
                     <div className={css.modal_content}>
                         <h1>{mainText}</h1>
                         <h2>{secondText}</h2>
-                        <Button link={buttonLink} className={buttonStylePicker(buttonColor)}>{buttonText}</Button>
+                        <Button link={buttonLink} className={getButtonColor(buttonColor)}>{buttonText}</Button>
                     </div>  
                 </div>
             </div>

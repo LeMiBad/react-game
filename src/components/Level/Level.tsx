@@ -44,6 +44,31 @@ const Level = () => {
     
             if(leftLayout.includes(e.key)) try{leftRef.current.click()}catch(e){}
         })
+
+        let startX = 0
+        let startY = 0
+        let currentX = 0
+        let currentY = 0
+
+        window.addEventListener('touchstart', (start) => {
+            startX = start.touches[0].clientX
+            startY = start.touches[0].clientY
+        })
+
+        window.addEventListener('touchmove', (move) => {
+            currentX = move.touches[0].clientX
+            currentY = move.touches[0].clientY
+        })
+
+        window.addEventListener('touchend', () => {
+            if(Math.abs(startX - currentX) > Math.abs(startY - currentY)) {
+                if(startX > currentX) try{leftRef.current.click()}catch(e){}
+                else try{rightRef.current.click()}catch(e){}
+            }else {
+                if(startY > currentY) try{upRef.current.click()}catch(e){}
+                else try{downRef.current.click()}catch(e){}
+            }
+        })
     })
 
     const endGame = (gameResult: string) => {

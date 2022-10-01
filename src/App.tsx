@@ -24,8 +24,6 @@ const App = () => {
         },
     })
 
-    console.log('Рендер')
-
     return (
         <>
             <Header />
