@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/react-game/static/css/main.7ff82a99.css",
-    "main.js": "/react-game/static/js/main.f880841d.js",
+    "main.css": "/react-game/static/css/main.2e334e44.css",
+    "main.js": "/react-game/static/js/main.51ba2131.js",
     "static/js/787.b161e958.chunk.js": "/react-game/static/js/787.b161e958.chunk.js",
+    "static/media/dirt.png": "/react-game/static/media/dirt.38c0b2996e038ab5e604.png",
+    "static/media/water.png": "/react-game/static/media/water.29d2e11aa8038aaec5cd.png",
     "index.html": "/react-game/index.html",
-    "main.7ff82a99.css.map": "/react-game/static/css/main.7ff82a99.css.map",
-    "main.f880841d.js.map": "/react-game/static/js/main.f880841d.js.map",
+    "main.2e334e44.css.map": "/react-game/static/css/main.2e334e44.css.map",
+    "main.51ba2131.js.map": "/react-game/static/js/main.51ba2131.js.map",
     "787.b161e958.chunk.js.map": "/react-game/static/js/787.b161e958.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ff82a99.css",
-    "static/js/main.f880841d.js"
+    "static/css/main.2e334e44.css",
+    "static/js/main.51ba2131.js"
   ]
 }
