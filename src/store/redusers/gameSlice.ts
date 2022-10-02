@@ -84,6 +84,11 @@ export const gameSlice = createSlice({
         setPossiblePickData (state, possiblePickData) {
             state.possiblePickData = possiblePickData.payload
         },
+        setLevel (state, action) {
+            state.gameArea = action.payload
+            state.currentGameArea = action.payload
+            console.log(action.payload)
+        },
         inGame: (state) => {
             if(state.victoryState === 'loose'){
                 state.gameArea = state.currentGameArea
@@ -106,7 +111,6 @@ export const gameSlice = createSlice({
             }
             if(isLose(state.gameArea) === 'win') gameSlice.caseReducers.winEnd(state)
             if(isLose(state.gameArea) === 'loose') gameSlice.caseReducers.looseEnd(state)
-
         },
         moveRight (state) {
             const [y, x] = find(state.gameArea)

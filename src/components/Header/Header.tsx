@@ -8,7 +8,7 @@ const Header = () => {
                 <Link to='/levelpick'>Уровни</Link>
                 <a target='blank' href='https://github.com/LeMiBad'>GitHub</a>
                 <Link to='/' className={css.main}>Главная</Link>
-                <Link to='*'>Генератор уровней</Link>
+                <Link to='/create'>Генератор уровней</Link>
                 <Link to='/control'>Управление</Link>
             </div>
         </div>

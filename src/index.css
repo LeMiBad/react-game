@@ -8,7 +8,8 @@ body {
   font-weight: 600;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #a8e13e;
+  /* background-color: #a8e13e; */
+  background: url(./back.png);
   overflow: hidden
 }
 

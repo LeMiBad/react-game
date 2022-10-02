@@ -5,6 +5,7 @@ import SoonPage from './components/SoonPage/SoonPage';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { animated, useTransition } from 'react-spring';
 import Header from './components/Header/Header';
+import CreateLevel from './components/CreateLevel/CreateLevel';
 
 const App = () => {
     const location = useLocation()
@@ -34,6 +35,7 @@ const App = () => {
                     <Route path='/react-game' element={<WelcomePage />} />
                     <Route path='/level' element={<Level />} />
                     <Route path='/levelpick' element={<LevelPicker />} />
+                    <Route path='/create' element={<CreateLevel />} />
                     <Route path='/control' element={<SoonPage mainText="Управление" secondText="Управление производится клавишами w a s d или стрелочками"/>} />
                     <Route path='/*' element={<SoonPage />} />
                 </Routes>

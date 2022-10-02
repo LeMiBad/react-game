@@ -20,7 +20,7 @@ const Level = () => {
         if(type === 'water') type = cx(css.cell, css.water)
         if(type === 'full') type = css.cell
 
-        return <div key={key} style={{width: `60px`, height: `60px`}} className={type}></div>
+        return <div key={key} style={{width: `6vw`, height: `6vw`}} className={type}></div>
     }
 
     const upLayout = ['w', 'W', 'ц', 'Ц', 'ArrowUp'],
