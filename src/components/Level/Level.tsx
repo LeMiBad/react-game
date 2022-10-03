@@ -56,9 +56,10 @@ const Level = () => {
         })
 
         window.addEventListener('touchmove', (move) => {
+            move.preventDefault()
             currentX = move.touches[0].clientX
             currentY = move.touches[0].clientY
-        })
+        }, { passive: false })
 
         window.addEventListener('touchend', () => {
             if(Math.abs(startX - currentX) > Math.abs(startY - currentY)) {

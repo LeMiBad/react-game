@@ -34,7 +34,6 @@ const LevelPicker = () => {
         return newArr
     }
 
-
     return (
         <div className={css.levelPickerWrapper}>
             {lvlPickData.map((item: Array<string>, index: number) => <div key={index} className={css.levelWrapper}>{item.map((level: string, ind: number) => returnLevelPicker(level, (index)*6+ind))}</div>)}
