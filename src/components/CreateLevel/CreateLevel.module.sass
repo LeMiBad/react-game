@@ -1,3 +1,6 @@
+@media (max-width: 1024px)
+    .play
+        width: 40% !important
 .play
     display: block
     text-decoration: none
@@ -27,19 +30,17 @@
         flex-direction: column
         .cellWrapper
             display: flex
-            button
-                font-size: 64px
+            .addCell
                 width: 6vw
                 border: 1px solid black
+                margin: 0.5px
                 transition: 0.2s
+                background-color: white
                 cursor: pointer
-            button:hover
-                background-color: #efd591
-            div
-                cursor: pointer
+            .addCell:hover
+                background-color: #af8929
             .cell
-                // background-color: #efd591
-                background: url('./dirt.png')
+                background-color: #efd591
                 border: 1px solid black
                 margin: 0.5px
                 transition: 1s black
@@ -48,19 +49,16 @@
             .cell.active
                 background-color: #80631c !important
             .cell.water
-                background: url('./water.png')
-                // background-color: #517bbb
+                background-color: #517bbb
             .cell.empty
                 background: none !important
-        button
-            display: flex
-            justify-content: center
-            align-items: center
+        .addRow
             cursor: pointer
-            font-size: 24px
-            font-weight: 600
+            background-color: white
+            border: 1px solid black
+            margin: 0.5px
+            height: 6vw
             transition: 0.2s
-            outline: none
-            width: 100%
-        button:hover
+            width: calc(100% - 3px)
+        .addRow:hover
             background-color: #efd591

@@ -2,13 +2,12 @@ import css from './CreateLevel.module.sass'
 import cx from 'classnames';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { gameSlice } from '../../store/redusers/gameSlice';
 
 const CreateLevel = () => {
     const [gameArea, setGameArea] = useState([['active']])
     const dispatch = useAppDispatch()
-    const {} = useAppSelector(state => state.gameReducer)
     const {setLevel} = gameSlice.actions
 
     const Cell = (type: string, key: number, column: number) => {
@@ -39,8 +38,8 @@ const CreateLevel = () => {
     const setCell = (y: number, x: number, type: string) => {
         const newArea = gameArea
         if(type === 'full') newArea[y][x] = 'water'
-        if(type === 'water') newArea[y][x] = 'empty'
-        if(type === 'empty') newArea[y][x] = 'full'
+        if(type === 'water') newArea[y][x] = 'produced'
+        if(type === 'produced') newArea[y][x] = 'full'
         setGameArea([...newArea])
     }
 
@@ -67,9 +66,9 @@ const CreateLevel = () => {
                     {gameArea.map((item: Array<string>, index: number) => 
                     <div key={index} className={css.cellWrapper}>
                         {item.map((item: string, ind: number) => Cell(item, ind, index))}
-                            <button onClick={() => {addCell(index)}}>+</button>
+                            <div className={css.addCell} onClick={() => {addCell(index)}}></div>
                     </div>)}
-                    <button onClick={addRow}>Добавить ряд</button>
+                    <div className={css.addRow} onClick={addRow}></div>
                 </div>
             </div>
         </>
