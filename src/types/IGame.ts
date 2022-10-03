@@ -4,4 +4,5 @@ export interface gameState {
     gameArea: Array<Array<string>>
     possiblePickData: Array<string> | Array<Array<string>> 
     lvlPickData: any
+    isLoading: boolean
 }

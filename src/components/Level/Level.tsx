@@ -20,7 +20,7 @@ const Level = () => {
         if(type === 'water') type = cx(css.cell, css.water)
         if(type === 'full') type = css.cell
 
-        return <div key={key} style={{width: `6vw`, height: `6vw`}} className={type}></div>
+        return <div key={key} style={{width: `5vw`, height: `5vw`}} className={type}></div>
     }
 
     const upLayout = ['w', 'W', 'ц', 'Ц', 'ArrowUp'],
@@ -34,16 +34,22 @@ const Level = () => {
         downRef: any = createRef(),
         leftRef: any = createRef();  
 
+    const keyListener = (e: KeyboardEvent) => {
+        if(upLayout.includes(e.key)) try{upRef.current.click()}catch(e){}
+
+        if(rightLayout.includes(e.key)) try{rightRef.current.click()}catch(e){}
+
+        if(downLayout.includes(e.key)) try{downRef.current.click()}catch(e){}
+
+        if(leftLayout.includes(e.key)) try{leftRef.current.click()}catch(e){}
+    }
+
     useEffect(() => {
-        window.addEventListener('keydown', (e) => {
-            if(upLayout.includes(e.key)) try{upRef.current.click()}catch(e){}
-    
-            if(rightLayout.includes(e.key)) try{rightRef.current.click()}catch(e){}
-    
-            if(downLayout.includes(e.key)) try{downRef.current.click()}catch(e){}
-    
-            if(leftLayout.includes(e.key)) try{leftRef.current.click()}catch(e){}
-        })
+        if(victoryState === 'win') {
+            window.removeEventListener('keydown', keyListener)
+        }else {
+            window.addEventListener('keydown', keyListener)
+        }
 
         let startX = 0
         let startY = 0
@@ -56,12 +62,11 @@ const Level = () => {
         })
 
         window.addEventListener('touchmove', (move) => {
-            move.preventDefault()
             currentX = move.touches[0].clientX
             currentY = move.touches[0].clientY
-        }, { passive: false })
+        }, {passive: false })
 
-        window.addEventListener('touchend', () => {
+        window.addEventListener('touchend', () => { 
             if(Math.abs(startX - currentX) > Math.abs(startY - currentY)) {
                 if(startX > currentX) try{leftRef.current.click()}catch(e){}
                 else try{rightRef.current.click()}catch(e){}
@@ -75,11 +80,12 @@ const Level = () => {
     const endGame = (gameResult: string) => {
         const goodTextArray = ['Великолепно!', 'Потрясающе!', 'Невероятно!']
         const badTextArray = ['Печально(', 'Больше старайся', 'Всё поулчится!']
-        const randomGoodTextArray = goodTextArray[Math.floor(Math.random() * goodTextArray.length)];
-        const randomBadTextArray = badTextArray[Math.floor(Math.random() * badTextArray.length)];
-        if(gameResult === 'win') return <ModalWindow buttonLink={'/levelpick'} buttonColor={'green'} mainText={randomGoodTextArray} secondText={'Нажимай, что-бы перейти на новый уровень!!!'} buttonText={'Next!'}/>
+        const randomGoodTextArray = goodTextArray[Math.floor(Math.random() * goodTextArray.length)]
+        const randomBadTextArray = badTextArray[Math.floor(Math.random() * badTextArray.length)]
+        if(gameResult === 'win') {
+            return <ModalWindow buttonLink={'/levelpick'} buttonColor={'green'} mainText={randomGoodTextArray} secondText={'Нажимай, что-бы перейти на новый уровень!!!'} buttonText={'Next!'}/>
+        }
         if(gameResult === 'loose') return <ModalWindow buttonLink={'/level'} buttonColor={'red'} mainText={randomBadTextArray} secondText={'Я уверен, у тебя всё получится!!!'} buttonText={'Again!'}/>
-        return 
     }
 
     if(gameArea === undefined) return (

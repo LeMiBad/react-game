@@ -65,7 +65,8 @@ const initialState: gameState = {
             'uncompleted',
             'uncompleted',
         ]
-    ]
+    ],
+    isLoading: false
 }
 
 
@@ -145,8 +146,12 @@ export const gameSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(getLevel.fulfilled, (state, action) => {
+            state.isLoading = false
             state.gameArea = action.payload.levelInfo
             state.currentGameArea = action.payload.levelInfo
+        })
+        builder.addCase(getLevel.pending, (state, action) => {
+            state.isLoading = true
         })
     },
 })

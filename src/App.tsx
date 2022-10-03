@@ -6,9 +6,12 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { animated, useTransition } from 'react-spring';
 import Header from './components/Header/Header';
 import CreateLevel from './components/CreateLevel/CreateLevel';
+import Loading from './components/Loading/Loading';
+import { useAppSelector } from './hooks/redux';
 
 const App = () => {
     const location = useLocation()
+    const {isLoading} = useAppSelector(state => state.gameReducer)
 
     const transitions = useTransition(location, {
         from: {
@@ -25,8 +28,11 @@ const App = () => {
         },
     })
 
+    const loading = () => (isLoading)? <Loading /> : <></>
+
     return (
         <>
+            {loading()}
             <Header />
             {transitions((props, item) => (
             <animated.div style={props}>
